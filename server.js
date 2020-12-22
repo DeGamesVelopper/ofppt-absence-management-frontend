@@ -21,18 +21,6 @@ app.use(express.json())
 
 app.use('/api',adminRouter)
 
-//404 not found
-app.use(async(req,res,next)=>{
-   next(Error.NotFound())
-})
-
-//error handler 
-app.use(async(err,req,res,next)=>{
-  const status = err.status || 500
-  res.status(status)
-  res.json({error : err.message})
-})
-
 
 if (process.env.NODE_ENV ==='production') {
   const path= require('path')
@@ -46,4 +34,17 @@ if (process.env.NODE_ENV ==='production') {
 
 app.listen(PORT,()=>{
   console.log(`Server started at port ${PORT}`)
+})
+
+
+//404 not found
+app.use(async(req,res,next)=>{
+  next(Error.NotFound())
+})
+
+//error handler 
+app.use(async(err,req,res,next)=>{
+ const status = err.status || 500
+ res.status(status)
+ res.json({error : err.message})
 })
