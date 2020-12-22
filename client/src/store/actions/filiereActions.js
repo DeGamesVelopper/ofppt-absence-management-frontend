@@ -5,20 +5,35 @@ import { LOADING, DATA_RECEIVED, FETCHING_ERROR,UNAUTHORIZED_ERROR,
 
 const token =localStorage.getItem("token")
 
+
+
 const getFilieres = () => async(dispatch) =>{
+  console.log('start fetching')
+
   dispatch({
     type : LOADING 
   })
 
   if(!token) return dispatch({type : UNAUTHORIZED_ERROR })
 
-  FetchData('admin/filieres',dispatch,token)
+   console.log('token is good : ',token)
+
+  FetchData('api/admin/filieres',dispatch,token)
   .then(data =>
-    dispatch({
-    type : DATA_RECEIVED,
-    data
-  }))
-  
+   { 
+      if (!data) {
+        console.log('data is not good :', data)
+        return
+      }
+      console.log('data is good :', data)
+      console.log('fetching finished')
+       return dispatch({
+          type : DATA_RECEIVED,
+          data
+        })
+   }
+  )
+  .catch((err)=> console.log('FetchData: ',err))
 }
 
 const FetchData = async(url,dispatch,token)=>{
@@ -33,6 +48,7 @@ const FetchData = async(url,dispatch,token)=>{
   .catch((err)=>{
     //handle UNAUTHORIZED_ERROR
     if (err.response.data.error) {
+      console.log(err.response.data.error)
        dispatch({type : UNAUTHORIZED_ERROR })
     }
   })
@@ -48,7 +64,7 @@ const deleteFiliere = id => async(dispatch) => {
   const headers = {
     Authorization: token
   }
-  const res = await axios.delete(`admin/deletefiliere/${id}`,{headers})
+  const res = await axios.delete(`api/admin/deletefiliere/${id}`,{headers})
   //handle error later
   if (!res) return dispatch({type : FETCHING_ERROR })
 
@@ -56,7 +72,7 @@ const deleteFiliere = id => async(dispatch) => {
      type : FILIERE_ON_DELETION_PROCCESS
    })
   //get filieres
-  FetchData('admin/filieres',dispatch,token)
+  FetchData('api/admin/filieres',dispatch,token)
   .then(data =>
     dispatch({
     type : DATA_RECEIVED,
@@ -75,7 +91,7 @@ const addFiliere = (abvname,filiere) => async(dispatch) =>{
     name:filiere
   }
   
-  const res = await axios.post('admin/addfiliere',{data},{headers})
+  const res = await axios.post('api/admin/addfiliere',{data},{headers})
   //handle error later
   if (!res) return dispatch({type : FILIERE_ADDING_ERROR })
 
@@ -83,7 +99,7 @@ const addFiliere = (abvname,filiere) => async(dispatch) =>{
      type : FILIERE_ON_ADDING_PROCCESS
    })
   //get filieres
-  FetchData('admin/filieres',dispatch,token)
+  FetchData('api/admin/filieres',dispatch,token)
   .then(data =>
     dispatch({
     type : DATA_RECEIVED,

@@ -10,7 +10,7 @@ function Group() {
     const headers = {
       Authorization: token
     }
-    axios.get('admin/test',{headers})
+    axios.get('api/admin/test',{headers})
     .then((res)=>setHello(res.data))
   }, []);
 
