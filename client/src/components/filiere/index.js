@@ -32,10 +32,8 @@ function Filiere() {
    useEffect(() => {
 
      if (Filieres && !Filieres.length>0) {
-       console.log('fetching data')
         dispatch(getFilieres())
         setFilieres(Filieres)
-       console.log('data fetched')
      }
    },[dispatch,Filieres]);
 

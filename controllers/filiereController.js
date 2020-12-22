@@ -27,7 +27,6 @@ const getFilieres = async(req,res,next)=>{
   }
 }
 
-
 const getFiliereByID = async(req,res,next)=>{
    const id =req.params.id
    try {
