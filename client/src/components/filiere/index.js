@@ -30,11 +30,13 @@ function Filiere() {
    const dispatch = useDispatch()
 
    useEffect(() => {
-     if (Filieres && !Filieres.length>0) {
-        dispatch(getFilieres())
-        setFilieres(Filieres)
-     }
-   },[dispatch,Filieres]);
+    dispatch(getFilieres())
+    setFilieres(Filieres)
+    //  if (Filieres && !Filieres.length>0) {
+    //     dispatch(getFilieres())
+    //     setFilieres(Filieres)
+    //  }
+   },[]);
 
    useEffect(() => {
     setFilieres(Filieres)

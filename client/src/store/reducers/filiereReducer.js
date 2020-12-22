@@ -2,7 +2,7 @@
 import { LOADING, DATA_RECEIVED, FILIERE_ON_DELETION_PROCCESS, FILIERE_ON_ADDING_PROCCESS} from '../actions/TYPES';
 
 const initalState = {
-   filieres : [],
+  filieres : [],
   isloading: false,
   onDeletion : false,
   onAdding : false,
