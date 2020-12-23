@@ -47,10 +47,10 @@ const deleteFiliereByID = async(req,res,next)=>{
 
 const updateFiliereByID = (req,res,next)=>{
    const id = req.params.id
-   const updatedFlr = req.body
+   const {data} = req.body
   
    const options={new : true}
-   Filiere.findByIdAndUpdate(id,updatedFlr,options)
+   Filiere.findByIdAndUpdate(id,data,options)
    .then((updatedFlr)=>{
       if(!updatedFlr) return next(Error.InternalServerError())
       res.json(updatedFlr)

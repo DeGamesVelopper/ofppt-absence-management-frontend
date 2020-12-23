@@ -1,5 +1,5 @@
 
-.createModal{
+.popUpModel{
   margin-top: 2rem;
   width: 80%;
   height: 40%;
@@ -12,7 +12,7 @@
   justify-content: center;
 }
 
-.createModal__closeIcon{
+.popUpModel__closeIcon{
   position: absolute;
   right: 0;
   top: 0;
@@ -27,29 +27,29 @@
 
 }
 
-.createModal__closeIcon img{
+.popUpModel__closeIcon img{
   width: .75rem;
 }
-.createModal__closeIcon:hover{
+.popUpModel__closeIcon:hover{
   background-color: #ff042ea4;
 }
 
-.createModal__title{
+.popUpModel__title{
   margin-bottom: .75rem;
 }
-.createModal__title span{
+.popUpModel__title span{
   font-size: 1.15rem;
   font-weight: bolder;
   color: rgba(11, 91, 138, 0.801);
 }
 
-.createModal__inputs{
+.popUpModel__inputs{
   width: 100%;
   justify-content: space-between;
   height: 30%;
 }
 
-.createModal__Input{
+.popUpModel__Input{
   width: 80%;
   height: 1.75rem;
   padding-left: .25rem;
@@ -59,7 +59,7 @@
   color: rgba(0, 0, 0, 0.822);
 }
 
-.createModal__buttons{
+.popUpModel__buttons{
   margin-top: 1rem;
   width: 80%;
   display: flex;
@@ -67,7 +67,7 @@
 
 }
 
-.createModal__buttons button{
+.popUpModel__buttons button{
   margin-left: 1rem;
   outline: none;
   border: none;
@@ -78,14 +78,14 @@
   cursor: pointer;
 }
 
-.createModal__buttons button span{
+.popUpModel__buttons button span{
   font-size: .75rem;
   font-weight: bold;
 }
-.createModal__ajouter{
+.popUpModel__sumbitButton{
   background-color: rgb(21, 163, 163);
 }
-.createModal__annuler{
+.popUpModel__cancelButton{
   background-color: rgb(219, 114, 15);
 }
 

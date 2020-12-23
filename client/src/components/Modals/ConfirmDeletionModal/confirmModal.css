@@ -5,7 +5,7 @@
   width: 70%;
   height: 20%;
   min-height: 6.5rem;
-  max-height: 6.5rem;
+  max-height: 8rem;
   max-width: 25rem;
   background-color: white;
   border-radius: .25rem;
@@ -85,7 +85,7 @@
 /* Keyframes */
 @keyframes fadeInAnimate{
   0%{
-    transform: translateY(-30rem);
+    transform: translateY(-20rem);
   }
   100%{
     transform: translateY(0rem);
@@ -97,7 +97,7 @@
     transform: translateY(0rem);
   }
  100%{
-  transform: translateY(-30rem);
+  transform: translateY(-20rem);
  }
 }
 

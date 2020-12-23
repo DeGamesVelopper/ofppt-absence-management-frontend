@@ -1,6 +1,6 @@
 import './customInput.css'
 
-function CustomInput({className,value,setValue,placeholder,search = false,searchIconStyle,filter = ()=>{}}) {
+function CustomInput({className,value,setValue,placeholder,required,search = false,searchIconStyle,filter = ()=>{}}) {
   
   return (
     <div className= {`customInput__cantainer ${className}`} >
@@ -11,6 +11,7 @@ function CustomInput({className,value,setValue,placeholder,search = false,search
         value={value}
         onChange={e => setValue(e.target.value)}
         onKeyUpCapture= {() => filter()}
+        required
       />
       {
         search? 

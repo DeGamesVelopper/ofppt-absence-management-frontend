@@ -2,12 +2,12 @@
 import Loading from '../Loading'
 import './table.css'
 
-function CustomTable({onDeletion,onAdding,headers,collection,setID,handleEdit,headerColor}) {
+function CustomTable({onCRUDAction,headers,collection,OpenDeleteModal,OpenUpdateModal,headerColor}) {
   return (
       <div className= "table">
         {
          /* delete or adding loading */
-         onDeletion || onAdding ? <Loading className="onLoading" /> : null
+         onCRUDAction ? <Loading className="onLoading" /> : null
         }
         { 
           collection ?
@@ -26,18 +26,24 @@ function CustomTable({onDeletion,onAdding,headers,collection,setID,handleEdit,he
               <tbody>
                 {
                   collection.map( item =>
-                      <tr key = {item._id} style = { collection[collection.length-1] ===item ? {borderBottom:`0.125rem solid ${headerColor}`}:null}>
-                          <td>{item.abvname}</td>
-                          <td>{item.name}</td>
+                      <tr key = {item[Object.keys(item)[0]]} 
+                      style ={ 
+                        collection[collection.length-1] ===item ? {borderBottom:`0.125rem solid ${headerColor}`}
+                        :null
+                       }
+                      >
+                        {/* obj[Object.keys(obj)[0]]  */}
+                          <td>{item[Object.keys(item)[1]] }</td>
+                          <td>{item[Object.keys(item)[2]] }</td>
                           <td  
                             className="editIcon"
-                            onClick={()=> handleEdit(item._id)}
+                            onClick={()=> OpenUpdateModal(item._id)}
                           >
                             <img src='images/edit.png' alt="editing"/>
                           </td>
                           <td
                             className="deleteIcon" 
-                            onClick={()=> setID(item._id)}
+                            onClick={()=> OpenDeleteModal(item._id)}
                           >
                             <img src='images/delete.png' alt="deleting"/>
                           </td>

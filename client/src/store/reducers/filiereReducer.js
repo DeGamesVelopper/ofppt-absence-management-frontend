@@ -1,11 +1,10 @@
 
-import { LOADING, DATA_RECEIVED, FILIERE_ON_DELETION_PROCCESS, FILIERE_ON_ADDING_PROCCESS} from '../actions/TYPES';
+import { LOADING, DATA_RECEIVED, FILIERE_ON_DELETION_PROCCESS, FILIERE_ON_ADDING_PROCCESS, FILIERE_ON_UPDATING_PROCCESS} from '../actions/TYPES';
 
 const initalState = {
   filieres : [],
   isloading: false,
-  onDeletion : false,
-  onAdding : false,
+  onCRUDAction : false,
 }
 
 const reducer = (state = initalState,action) =>{
@@ -21,20 +20,15 @@ const reducer = (state = initalState,action) =>{
           ...state,
           filieres: action.data,
           isloading:false,
-          onDeletion:false,
-          onAdding:false,
+          onCRUDAction:false,
         }
       case FILIERE_ON_DELETION_PROCCESS:
+       case FILIERE_ON_UPDATING_PROCCESS:
+       case FILIERE_ON_ADDING_PROCCESS:
         return{
           ...state,
-          onDeletion:true
+          onCRUDAction:true
         }
-      case FILIERE_ON_ADDING_PROCCESS:
-        return{
-          ...state,
-          onAdding:true
-        }
-  
 
       default:
         return state

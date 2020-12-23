@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector} from 'react-redux';
 
-import CreateModal from '../Modals/createModal';
+import CreateModal from '../Modals/PopUpModal';
+import UpdateModal from '../Modals/PopUpModal';
 import ConfirmModal from '../Modals/ConfirmDeletionModal';
 import SearchInput from '../Controls/CustomInput'
 import Table from '../Controls/Table'
@@ -13,24 +14,25 @@ import './filiere.css'
 
 function Filiere() {
  
-    const [searchInput, setSearchInput] = useState("");
     const [showCreateModal,setShowCreateModal] = useState(false)
+    const [updateAbvname,setUpdateAbvname] = useState('')
+    const [IdToUpdate,setIdToUpdate] = useState('')
+    const [updateFiliereName,setUpdateFiliereName] = useState('')
+
+    const [searchInput, setSearchInput] = useState("");
     const [ID, setID] = useState('');
-    const [abvname, setAbvname] = useState('');
-    const [filiere, setFiliere] = useState('');
+    const [newAbvname, setNewAbvname] = useState('');
+    const [newFiliere, setNewFiliere] = useState('');
 
     const [filieres,setFilieres] = useState([])
   
     const isloading = useSelector(state => state.flrStore.isloading)
     const Filieres = useSelector(state => state.flrStore.filieres)
-    const filiere_onDeletion = useSelector(state => state.flrStore.onDeletion)
-    const filiere_onAdding = useSelector(state => state.flrStore.onAdding)
-    
+    const onCRUDAction = useSelector(state => state.flrStore.onCRUDAction)
 
    const dispatch = useDispatch()
 
    useEffect(() => {
-
      if (Filieres && !Filieres.length>0) {
         dispatch(getFilieres())
         setFilieres(Filieres)
@@ -47,7 +49,7 @@ function Filiere() {
       setFilieres(Filieres)
     else
     {
-      const filterdFlrs = Filieres.filter(flr=>
+      const filterdFlrs = Filieres.filter(flr =>
         (String(flr.abvname).toLowerCase()).startsWith(searchInput.toLowerCase()) 
         ||
         (String(flr.name).toLowerCase()).startsWith(searchInput.toLowerCase())
@@ -56,23 +58,45 @@ function Filiere() {
     }
   }
 
-  const handleEdit = (id) =>{
-    dispatch(editFiliere(id))
+  const handleEdit = () =>{
+    const flr = {
+       id: IdToUpdate,
+       abvname: updateAbvname,
+       name: updateFiliereName
+    }
+    dispatch(editFiliere(flr))
+    return true
   }
 
   const handleDelete = (id) =>{
     dispatch(deleteFiliere(id))
+    setID('')
   }
 
   const handleAdd = () =>{
-    if (abvname && filiere)
-      dispatch(addFiliere(abvname,filiere))
+    if (newAbvname && newFiliere)
+    {
+      dispatch(addFiliere(newAbvname,newFiliere))
+      return true
+    }
+    else return false
+  }
+
+  const OpenUpdateModal = (id) =>{
+    const flr = Filieres.find(filiere => filiere._id === id)
+    const {_id,abvname,name} = flr
+    setIdToUpdate(_id)
+    setUpdateAbvname(abvname)
+    setUpdateFiliereName(name)
   }
 
   const CloseModal= ()=>{
     setShowCreateModal(false)
-    setFiliere('')
-    setAbvname('')
+    setIdToUpdate('')
+    setUpdateAbvname('')
+    setUpdateFiliereName('')
+    setNewFiliere('')
+    setNewAbvname('')
   }
 
   return (
@@ -81,14 +105,32 @@ function Filiere() {
         /* create */
         showCreateModal ? 
         <CreateModal
+          customizeInput = "createModal__Input"
           title = 'Nouveau Filière'
           inputs = {[
-            {placeholder: "Abreviation" , value: abvname , setValue: setAbvname},
-            {placeholder: "Filiere" , value: filiere , setValue: setFiliere},
+            {keyValue:1, placeholder: "Abreviation" ,required :true, value: newAbvname , setValue: setNewAbvname},
+            {keyValue:2, placeholder: "Filiere" ,required :true, value: newFiliere , setValue: setNewFiliere},
           ]}
-          customizeInput = "createModal__Input"
+          sumbitButton='Ajouter'
+          cancelButton='Annuler'
+          DoAction = {() => handleAdd()}
           close ={() => CloseModal()}
-          Add = {() => handleAdd()}
+        /> : null
+      }
+      {
+        // update Modal
+        updateAbvname && updateFiliereName ? 
+        <UpdateModal
+          customizeInput = "createModal__Input"
+          title = 'Modification du filière'
+          inputs = {[
+            {keyValue:1,placeholder: "Abreviation" , value: updateAbvname , setValue:setUpdateAbvname},
+            {keyValue:2,placeholder: "Filiere" , value: updateFiliereName ,setValue: setUpdateFiliereName},
+          ]}
+          sumbitButton = 'Changer'
+          cancelButton = 'Annuler'
+          DoAction = {() => handleEdit()}
+          close ={() => CloseModal()}
         /> : null
       }
       {
@@ -126,12 +168,11 @@ function Filiere() {
 
         {/* table */}
           <Table
-            onDeletion = {filiere_onDeletion} 
-            onAdding = {filiere_onAdding}
-            headers = {["Abréviation","Filiere"]}
             collection = {filieres}
-            setID = {setID}
-            handleEdit = {handleEdit}
+            onCRUDAction = {onCRUDAction} 
+            headers = {["Abréviation","Filiere"]}
+            OpenDeleteModal = {setID}
+            OpenUpdateModal = {OpenUpdateModal}
           />
       </div>
       } 

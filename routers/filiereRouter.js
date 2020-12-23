@@ -4,11 +4,6 @@ const filiereController  = require('../controllers/filiereController')
 const {verifyToken} = require('../helpers/jwtHelpers')
 
 
-const test = (req,res,next) =>{
-  res.json('hello from api')
-}
-
-filiereRouter.get('/admin/test',verifyToken,test)
 
 filiereRouter.get('/admin/filiere/:id',verifyToken,filiereController.getFiliereByID)
 
