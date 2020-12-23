@@ -70,7 +70,6 @@ function Filiere() {
 
   const handleDelete = (id) =>{
     dispatch(deleteFiliere(id))
-    setID('')
   }
 
   const handleAdd = () =>{
