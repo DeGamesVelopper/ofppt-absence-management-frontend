@@ -5,7 +5,7 @@ import  './confirmModal.css';
 const ConfirmModal = ({text,close,Delete}) => {
 
   const ConfirmDeletion = () =>{
-    // Delete()
+    Delete()
     CloseModal()
   }
 
