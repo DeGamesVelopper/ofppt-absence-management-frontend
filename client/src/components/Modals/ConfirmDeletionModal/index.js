@@ -7,7 +7,7 @@ const ConfirmModal = ({text,close,Delete}) => {
   const ConfirmDeletion = () =>{
     Delete()
     CloseModal()
-  }
+  }  
 
   const CloseModal = ()=>{
     const modal = document.querySelector('.confirmModal')

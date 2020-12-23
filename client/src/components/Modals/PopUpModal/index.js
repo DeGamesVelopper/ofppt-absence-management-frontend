@@ -53,7 +53,6 @@ const PopUpModal = ({DoAction,close,inputs,customizeInput,title,sumbitButton='Su
                        placeholder = {input.placeholder}
                        value = {input.value}
                        setValue = {input.setValue}
-                       required ={input.required}
                     />
                   )
                 }

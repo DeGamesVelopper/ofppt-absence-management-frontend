@@ -14,18 +14,20 @@ import './filiere.css'
 
 function Filiere() {
  
+    const [searchInput, setSearchInput] = useState("");
+
     const [showCreateModal,setShowCreateModal] = useState(false)
     const [updateAbvname,setUpdateAbvname] = useState('')
     const [IdToUpdate,setIdToUpdate] = useState('')
     const [updateFiliereName,setUpdateFiliereName] = useState('')
 
-    const [searchInput, setSearchInput] = useState("");
     const [ID, setID] = useState('');
     const [newAbvname, setNewAbvname] = useState('');
     const [newFiliere, setNewFiliere] = useState('');
 
     const [filieres,setFilieres] = useState([])
   
+    //redux states
     const isloading = useSelector(state => state.flrStore.isloading)
     const Filieres = useSelector(state => state.flrStore.filieres)
     const onCRUDAction = useSelector(state => state.flrStore.onCRUDAction)
@@ -107,8 +109,8 @@ function Filiere() {
           customizeInput = "createModal__Input"
           title = 'Nouveau Filière'
           inputs = {[
-            {keyValue:1, placeholder: "Abreviation" ,required :true, value: newAbvname , setValue: setNewAbvname},
-            {keyValue:2, placeholder: "Filiere" ,required :true, value: newFiliere , setValue: setNewFiliere},
+            {keyValue:1, placeholder: "Abreviation", value: newAbvname , setValue: setNewAbvname},
+            {keyValue:2, placeholder: "Filiere", value: newFiliere , setValue: setNewFiliere},
           ]}
           sumbitButton='Ajouter'
           cancelButton='Annuler'
