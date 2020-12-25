@@ -10,7 +10,6 @@ require('dotenv').config('dev')
 require('./helpers/init_mongoDB')
 
 const PORT = process.env.PORT || 5000
-
 const app = new express()
 
 //Middlewares

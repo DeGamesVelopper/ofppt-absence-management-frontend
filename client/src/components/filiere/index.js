@@ -11,9 +11,11 @@ import { getFilieres ,editFiliere, deleteFiliere ,addFiliere } from '../../store
 
 import PageLoading from '../Controls/Loading/pageLoading';
 import './filiere.css'
+import { AddIcon } from '../../Icons';
+import { Redirect } from 'react-router-dom';
 
 function Filiere() {
- 
+
     const [searchInput, setSearchInput] = useState("");
 
     const [showCreateModal,setShowCreateModal] = useState(false)
@@ -31,19 +33,20 @@ function Filiere() {
     const isloading = useSelector(state => state.flrStore.isloading)
     const Filieres = useSelector(state => state.flrStore.filieres)
     const onCRUDAction = useSelector(state => state.flrStore.onCRUDAction)
-
+    const islogin = useSelector(state => state.auth.islogin)
    const dispatch = useDispatch()
 
    useEffect(() => {
-     if (Filieres && !Filieres.length>0) {
+      if (islogin && Filieres?.length === 0) {
         dispatch(getFilieres())
         setFilieres(Filieres)
-     }
-   },[dispatch,Filieres]);
+      }
+   },[]);
+    
 
-   useEffect(() => {
-    setFilieres(Filieres)
-  },[Filieres]);
+    useEffect(() => {
+      setFilieres(Filieres)
+    },[Filieres]);
  
   
   const filter = () =>{
@@ -102,81 +105,84 @@ function Filiere() {
 
   return (
     <>
-      {
-        /* create */
-        showCreateModal ? 
-        <CreateModal
-          customizeInput = "createModal__Input"
-          title = 'Nouveau Filière'
-          inputs = {[
-            {keyValue:1, placeholder: "Abreviation", value: newAbvname , setValue: setNewAbvname},
-            {keyValue:2, placeholder: "Filiere", value: newFiliere , setValue: setNewFiliere},
-          ]}
-          sumbitButton='Ajouter'
-          cancelButton='Annuler'
-          DoAction = {() => handleAdd()}
-          close ={() => CloseModal()}
-        /> : null
-      }
-      {
-        // update Modal
-        updateAbvname && updateFiliereName ? 
-        <UpdateModal
-          customizeInput = "createModal__Input"
-          title = 'Modification du filière'
-          inputs = {[
-            {keyValue:1,placeholder: "Abreviation" , value: updateAbvname , setValue:setUpdateAbvname},
-            {keyValue:2,placeholder: "Filiere" , value: updateFiliereName ,setValue: setUpdateFiliereName},
-          ]}
-          sumbitButton = 'Changer'
-          cancelButton = 'Annuler'
-          DoAction = {() => handleEdit()}
-          close ={() => CloseModal()}
-        /> : null
-      }
-      {
-          /* delete */
-          ID ? 
-          <ConfirmModal 
-            text = "Voulez-vous vraiment supprimer ce filiere?"
-            Delete={() =>handleDelete(ID)}
-            close ={() => setID('')}
-          />: null
-      }      
-      {
-        isloading ? <PageLoading/> : 
-        <div className="filieres__content">
-        {/* search and add new */}
-          <div className="filieres__search__add">
-          {/* add */}
-          <div
-            className="filieres__addIcon" 
-            onClick = {()=> setShowCreateModal(true)}
-            >
-              <img src="images/add.svg" alt="adding"/>
+     {  
+        !islogin ? <Redirect to='/login'/> :
+          /* create */
+          showCreateModal ? 
+          <CreateModal
+            customizeInput = "createModal__Input"
+            title = 'Nouveau Filière'
+            inputs = {[
+              {keyValue:1, placeholder: "Abreviation", value: newAbvname , setValue: setNewAbvname},
+              {keyValue:2, placeholder: "Filiere", value: newFiliere , setValue: setNewFiliere},
+            ]}
+            sumbitButton='Ajouter'
+            cancelButton='Annuler'
+            DoAction = {() => handleAdd()}
+            close ={() => CloseModal()}
+          /> : null
+        }
+        {
+          // update Modal
+          updateAbvname && updateFiliereName ? 
+          <UpdateModal
+            customizeInput = "createModal__Input"
+            title = 'Modification du filière'
+            inputs = {[
+              {keyValue:1,placeholder: "Abreviation" , value: updateAbvname , setValue:setUpdateAbvname},
+              {keyValue:2,placeholder: "Filiere" , value: updateFiliereName ,setValue: setUpdateFiliereName},
+            ]}
+            sumbitButton = 'Changer'
+            cancelButton = 'Annuler'
+            DoAction = {() => handleEdit()}
+            close ={() => CloseModal()}
+          /> : null
+        }
+        {
+            /* delete */
+            ID ? 
+            <ConfirmModal 
+              text = "Voulez-vous vraiment supprimer ce filiere?"
+              Delete={() =>handleDelete(ID)}
+              close ={() => setID('')}
+            />: null
+        }      
+        {
+          isloading ? <PageLoading/> : 
+          <div className="filieres__content">
+          {/* search and add new */}
+            <div className="filieres__search__add">
+            {/* add */}
+            <AddIcon onClick={()=> setShowCreateModal(true)} className='Icon filieres__content__addIcon'/>
+          
+            {/* <div
+              className="filieres__addIcon Icon" 
+              onClick = {()=> setShowCreateModal(true)}
+              >
+                <img src="images/add.svg" alt="adding"/>
+            </div> */}
+
+            {/* custom input */}
+            <SearchInput
+                className='filieres__Input'
+                value={searchInput} 
+                setValue={setSearchInput} 
+                placeholder = "Recherche du filiere" 
+                search={true}
+                filter ={filter}
+              />
           </div>
 
-          {/* custom input */}
-          <SearchInput
-              className='filieres__Input'
-              value={searchInput} 
-              setValue={setSearchInput} 
-              placeholder = "Recherche du filiere" 
-              search={true}
-              filter ={filter}
+          {/* table */}
+            <Table
+              collection = {filieres}
+              onCRUDAction = {onCRUDAction} 
+              headers = {["Abréviation","Filiere"]}
+              OpenDeleteModal = {setID}
+              OpenUpdateModal = {OpenUpdateModal}
             />
         </div>
-
-        {/* table */}
-          <Table
-            collection = {filieres}
-            onCRUDAction = {onCRUDAction} 
-            headers = {["Abréviation","Filiere"]}
-            OpenDeleteModal = {setID}
-            OpenUpdateModal = {OpenUpdateModal}
-          />
-      </div>
-      } 
+        } 
     </>
      
   )

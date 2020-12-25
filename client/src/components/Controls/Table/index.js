@@ -2,7 +2,10 @@
 import Loading from '../Loading'
 import './table.css'
 
+import { NextIcon,PreviousIcon } from '../../../Icons';
+
 function CustomTable({onCRUDAction,headers,collection,OpenDeleteModal,OpenUpdateModal,headerColor}) {
+  
   return (
       <div className= "table">
         {
@@ -10,8 +13,13 @@ function CustomTable({onCRUDAction,headers,collection,OpenDeleteModal,OpenUpdate
          onCRUDAction ? <Loading className="onLoading" /> : null
         }
         { 
-          collection ?
-          <table className="content-table">
+          collection && !collection.type ? // handle auth error here later
+          <>
+            <div className="pagination">
+               <PreviousIcon className = 'Icon pagination__Icon'/>
+                <NextIcon className = 'Icon pagination__Icon'/>
+            </div>
+            <table className="content-table">
               <thead>
                 <tr style ={{backgroundColor:headerColor}}>
                   {
@@ -25,7 +33,7 @@ function CustomTable({onCRUDAction,headers,collection,OpenDeleteModal,OpenUpdate
               </thead>
               <tbody>
                 {
-                  collection.map( item =>
+                   collection.map( item =>
                       <tr key = {item[Object.keys(item)[0]]} 
                       style ={ 
                         collection[collection.length-1] ===item ? {borderBottom:`0.125rem solid ${headerColor}`}
@@ -52,6 +60,7 @@ function CustomTable({onCRUDAction,headers,collection,OpenDeleteModal,OpenUpdate
                 }
               </tbody>
             </table>
+          </>
           :<div className="emptyTable">NO Filiere</div> //remove this later
         }
       </div>

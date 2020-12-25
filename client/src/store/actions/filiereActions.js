@@ -25,7 +25,6 @@ import { LOADING, DATA_RECEIVED, FETCHING_ERROR,UNAUTHORIZED_ERROR,
 // Actions
 const getFilieres = () => async(dispatch) =>{
   const token =localStorage.getItem("token")
-
   dispatch({
     type : LOADING 
   })

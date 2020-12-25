@@ -2,16 +2,17 @@
 //Header icons
 export const MenuIcon = ({className}) =>{
   return (
-     <div 
-       style={{display:"flex", alignItems: "center" , justifyContent: "center"}}
-       className = {className} 
-      >
-       <svg
+    <div className = {`${className}`}>
+       <div 
+        className="svg"
+        style={{display:"flex", alignItems: "center" , justifyContent: "center"}}
+       >
+        <svg
         xmlns="http://www.w3.org/2000/svg"
         enableBackground="new 0 0 512 512"
         viewBox="0 0 512 512"
         style = {{width:'inherit', height:'inherit'}}
-      >
+       >
         <g>
           <path
             xmlns="http://www.w3.org/2000/svg"
@@ -20,28 +21,31 @@ export const MenuIcon = ({className}) =>{
           ></path>
         </g>
       </svg>
+      </div>
     </div>
   )
 }
 
 export const CloseIcon = ({className}) =>{
   return(
-     <div 
-       style={{display:"flex", alignItems: "center" , justifyContent: "center"}}
-       className = {className} 
-      >
-         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          enableBackground="new 0 0 512 512"
-          viewBox="0 0 348.333 348.334"
-          style = {{width:'inherit', height:'inherit'}}
+      <div className = {`${className}`}>
+        <div 
+          className="svg"
+          style={{display:"flex", alignItems: "center" , justifyContent: "center"}}
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            enableBackground="new 0 0 512 512"
+            viewBox="0 0 348.333 348.334"
+            style = {{width:'inherit', height:'inherit'}}
+          >
           <path
             xmlns="http://www.w3.org/2000/svg"
             d="M336.559 68.611L231.016 174.165l105.543 105.549c15.699 15.705 15.699 41.145 0 56.85-7.844 7.844-18.128 11.769-28.407 11.769-10.296 0-20.581-3.919-28.419-11.769L174.167 231.003 68.609 336.563c-7.843 7.844-18.128 11.769-28.416 11.769-10.285 0-20.563-3.919-28.413-11.769-15.699-15.698-15.699-41.139 0-56.85l105.54-105.549L11.774 68.611c-15.699-15.699-15.699-41.145 0-56.844 15.696-15.687 41.127-15.687 56.829 0l105.563 105.554L279.721 11.767c15.705-15.687 41.139-15.687 56.832 0 15.705 15.699 15.705 41.145.006 56.844z"
             data-original="#000000"
           ></path>
         </svg>
+      </div>
     </div>
   )
 }
@@ -236,6 +240,81 @@ export const LogOutIcon = ({className}) => {
       </div>
   )
 }
+
+
+export const NextIcon = ({className}) => {
+  return (
+      <div className = {`${className}`}>
+        <div 
+         className="svg"
+         style={{display:"flex", alignItems: "center" , justifyContent: "center"}}
+        >
+          <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    enableBackground="new 0 0 512 512"
+                    viewBox="0 0 492.004 492.004"
+                    style = {{width:'inherit', height:'inherit'}}
+                  >
+                    <path
+                      xmlns="http://www.w3.org/2000/svg"
+                      d="M382.678 226.804L163.73 7.86C158.666 2.792 151.906 0 144.698 0s-13.968 2.792-19.032 7.86l-16.124 16.12c-10.492 10.504-10.492 27.576 0 38.064L293.398 245.9l-184.06 184.06c-5.064 5.068-7.86 11.824-7.86 19.028 0 7.212 2.796 13.968 7.86 19.04l16.124 16.116c5.068 5.068 11.824 7.86 19.032 7.86s13.968-2.792 19.032-7.86L382.678 265c5.076-5.084 7.864-11.872 7.848-19.088.016-7.244-2.772-14.028-7.848-19.108z"
+                      data-original="#000000"
+                    ></path>
+                  </svg>
+        </div>
+        
+     </div>
+  )
+}
+
+export const PreviousIcon = ({className}) => {
+  return (
+      <div className = {`${className}`}>
+        <div 
+        className="svg"
+        style={{display:"flex", alignItems: "center" , justifyContent: "center"}}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            enableBackground="new 0 0 512 512"
+            viewBox="0 0 492.004 492.004"
+           style = {{width:'inherit', height:'inherit'}}
+          >
+            <path
+              xmlns="http://www.w3.org/2000/svg"
+              d="M382.678 226.804L163.73 7.86C158.666 2.792 151.906 0 144.698 0s-13.968 2.792-19.032 7.86l-16.124 16.12c-10.492 10.504-10.492 27.576 0 38.064L293.398 245.9l-184.06 184.06c-5.064 5.068-7.86 11.824-7.86 19.028 0 7.212 2.796 13.968 7.86 19.04l16.124 16.116c5.068 5.068 11.824 7.86 19.032 7.86s13.968-2.792 19.032-7.86L382.678 265c5.076-5.084 7.864-11.872 7.848-19.088.016-7.244-2.772-14.028-7.848-19.108z"
+              data-original="#000000"
+              transform="rotate(180 246.002 246.002)"
+            ></path>
+          </svg>
+        </div>
+      </div>
+  )
+}
+
+export const AddIcon = ({className,onClick}) => {
+  return (
+      <div onClick={onClick} className = {`${className}`}>
+        <div 
+          className="svg"
+          style={{display:"flex", alignItems: "center" , justifyContent: "center"}}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 448"
+            style = {{width:'inherit', height:'inherit'}}
+          >
+            <path d="M408 184H272a8 8 0 01-8-8V40c0-22.09-17.91-40-40-40s-40 17.91-40 40v136a8 8 0 01-8 8H40c-22.09 0-40 17.91-40 40s17.91 40 40 40h136a8 8 0 018 8v136c0 22.09 17.91 40 40 40s40-17.91 40-40V272a8 8 0 018-8h136c22.09 0 40-17.91 40-40s-17.91-40-40-40zm0 0"></path>
+          </svg>
+        </div>
+      </div>
+  )
+}
+
+
+
+
+
 
 
 

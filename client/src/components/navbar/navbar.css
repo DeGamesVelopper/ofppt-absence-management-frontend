@@ -15,17 +15,24 @@
   user-select: none;
 }
 
+.nav__closeIcon,
 .nav__menuIcon{
+  margin-left: .25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.nav__menuIcon .svg{
   width: 1rem;
   height: 1rem;
   fill: #4723D9;
 }
-
-.nav__closeIcon{
+.nav__closeIcon .svg{
   width: .75rem;
   height: .75rem;
   fill: #4723D9;
 }
+
 
 /* apply on js */
 /* move menuIcon onClick by adding padding left */
@@ -134,6 +141,21 @@
     height: 1.25rem;
     pointer-events: none;
   }
+
+  .nav__closeIcon,
+ .nav__menuIcon{
+  width: 3rem;
+  height: 3rem;
+}
+
+.nav__menuIcon .svg{
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.nav__closeIcon .svg{
+  width: .85rem;
+  height: .85rem;
+}
   
   /* Navbar */
   .l-navbar{

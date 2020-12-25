@@ -15,10 +15,27 @@
   width: 2rem;
 }
 
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.pagination__Icon{
+  width: 2rem;
+  height: 2rem;
+}
+.pagination__Icon .svg{
+  width: .75rem;
+  height: .75rem;
+  fill: #096bbb;
+}
+
 .content-table {
+  margin-top: .5rem;
   width: 100%;
   border-collapse: collapse;
-  margin:1rem 0;
   font-size: 0.6rem;
   font-weight: bold;
   max-width: 56.25rem;

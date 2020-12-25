@@ -1,26 +1,30 @@
 
 import React,{ useState  } from 'react';
+import { useSelector ,useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {CloseIcon, MenuIcon ,GroupIcon , FiliereIcon, StagiaireIcon, AbsenceIcon, ModuleIcon, FormateurIcon, LogOutIcon} from '../../Icons'
 
+import { logout } from '../../store/actions/authActions';
 import "./navbar.css";
 
 const Navbar = ()=> {
 
  const [menuToggle, setMenuToggle] = useState(false);
 
+ const islogin = useSelector(state => state.auth.islogin)
+ const dispatch = useDispatch()
+
   return (
     <>
       <header id="header" className="header">
         <div 
-          className="Icon" 
           id='menuIcon'
           onClick= {()=> setMenuToggle(prev => { return !prev})}
         >
         {
             !menuToggle ? 
-            <MenuIcon className="nav__menuIcon"/> :
-            <CloseIcon  className="nav__closeIcon"/>
+            <MenuIcon className="Icon nav__menuIcon"/> :
+            <CloseIcon  className="Icon nav__closeIcon"/>
         }
         </div>
       </header>
@@ -28,7 +32,7 @@ const Navbar = ()=> {
       <div className="l-navbar" id="nav-bar">
            <nav className="nav">
               <div className ="nav__content">
-                <Link to="/" className="nav__logo" id='nav__logo'>
+                <Link to={islogin ? '/' : '/login'} className="nav__logo" id='nav__logo'>
                     <img className='nav__logoIcon' id='nav__logoIcon' src="images/ofppt_logo.svg" alt="logo"/>
                 </Link>
 
@@ -65,7 +69,7 @@ const Navbar = ()=> {
                 </div>
               </div>
 
-              <Link to='/login' className="nav__link">
+              <Link to='/login' className="nav__link" onClick = {()=>dispatch(logout())}>
                   <LogOutIcon className="nav__Icon" />
                   <span className="nav__name">Log Out</span>
                 </Link>

@@ -47,14 +47,13 @@ body{
 
 /* Global css */
 .Icon{
-  width: 3rem;
-  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   cursor: pointer;
   user-select: none;
+  transition: .199s ease-in;
 }
 
 .Icon:hover {

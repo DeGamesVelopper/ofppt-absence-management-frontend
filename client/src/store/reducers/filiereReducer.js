@@ -1,5 +1,5 @@
 
-import { LOADING, DATA_RECEIVED, FILIERE_ON_DELETION_PROCCESS, FILIERE_ON_ADDING_PROCCESS, FILIERE_ON_UPDATING_PROCCESS} from '../actions/TYPES';
+import { LOADING, DATA_RECEIVED, FILIERE_ON_DELETION_PROCCESS, FILIERE_ON_ADDING_PROCCESS, FILIERE_ON_UPDATING_PROCCESS, LOGOUT} from '../actions/TYPES';
 
 const initalState = {
   filieres : [],
@@ -28,6 +28,11 @@ const reducer = (state = initalState,action) =>{
         return{
           ...state,
           onCRUDAction:true
+        }
+      case LOGOUT:
+        return{
+          ...state,
+          filieres: []
         }
 
       default:
