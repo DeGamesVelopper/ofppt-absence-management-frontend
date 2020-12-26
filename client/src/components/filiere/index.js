@@ -64,6 +64,7 @@ function Filiere() {
   }
 
   const handleEdit = () =>{
+    setSearchInput('')
     const flr = {
        id: IdToUpdate,
        abvname: updateAbvname,
@@ -74,6 +75,7 @@ function Filiere() {
   }
 
   const handleDelete = (id) =>{
+    setSearchInput('')
     dispatch(deleteFiliere(id))
   }
 

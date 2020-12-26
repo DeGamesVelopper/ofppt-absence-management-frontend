@@ -26,7 +26,7 @@ function Login() {
   return (
    <>
     {
-      islogin ? <Redirect to='/Home'/>:
+      islogin ? <Redirect to='/'/>:
       <div className='login flex_column'>
         <div>
           <h1 className="login__title">Login</h1>

@@ -1,8 +1,12 @@
 
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 function Home() {
 
+   const islogin = useSelector(state => state.islogin)
   return (
+    islogin ? <Redirect to='/login'/>:
     <div>
       <h1>Home</h1>
     </div>

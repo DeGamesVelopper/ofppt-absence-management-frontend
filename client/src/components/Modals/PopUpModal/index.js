@@ -6,6 +6,7 @@ import  './PopUpModal.css';
 
 const PopUpModal = ({DoAction,close,inputs,customizeInput,title,sumbitButton='Submit',cancelButton='Cancel'}) => {
 
+
    const SumbitAction = () =>{
      if(DoAction())
        CloseModal()
@@ -32,7 +33,11 @@ const PopUpModal = ({DoAction,close,inputs,customizeInput,title,sumbitButton='Su
         { 
           inputs ?
           <div className ="Modal__container " onClick = {e =>closeModalOnClick(e)}>
-            <div className="popUpModel flex_column fadeIn">
+            <div 
+                  onKeyDown ={e => {
+                    if (e.code==="Enter") SumbitAction()
+                  }}
+                  className="popUpModel flex_column fadeIn">
               <div className="popUpModel__closeIcon">
                 <img 
                   className="popUpModel__icon"
