@@ -1,31 +1,32 @@
 
-import { useState } from "react";
-
 import Loading from '../Loading'
 import './table.css'
 
 import { NextIcon,PreviousIcon } from '../../../Icons';
 
-function CustomTable({onCRUDAction,headers,collection,OpenDeleteModal,OpenUpdateModal,headerColor}) {
+function CustomTable({COLLECTION_LENGTH,currentIndex,Next,Previous,onCRUDAction,headers,collection,OpenDeleteModal,OpenUpdateModal,headerColor,fetchCollection}) {
   
-  const [firstIndex, setFirstIndex] = useState(1);
-  const [lastIndex, setLastIndex] = useState(50);
-
   return (
       <div className= "table">
         {
          /* delete or adding loading onCRUDAction*/
-          onCRUDAction ? <Loading className="onLoading" /> : null
+         onCRUDAction ? <Loading className="onLoading" /> : null
         }
         { 
           collection && !collection.type ? // handle auth error here later
           <>
             <div className="pagination">
                <div className="current__table__page">
-                 <span>{firstIndex} - {lastIndex} de {collection.length}</span>
+                 <span>{currentIndex.firstIndex} - {currentIndex.lastIndex} de {COLLECTION_LENGTH}</span>
                </div>
-               <PreviousIcon className = 'Icon pagination__Icon'/>
-               <NextIcon className = 'Icon pagination__Icon'/>
+               <PreviousIcon 
+                  className = 'Icon pagination__Icon'
+                  onClick = {Previous}
+               />
+               <NextIcon
+                  className = 'Icon pagination__Icon'
+                  onClick = {Next}
+                />
             </div>
             <table className="content-table">
               <thead>

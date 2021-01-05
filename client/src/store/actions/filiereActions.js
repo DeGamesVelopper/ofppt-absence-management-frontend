@@ -1,131 +1,119 @@
-import axios from 'axios';
 
-import { LOADING, DATA_RECEIVED, FETCHING_ERROR,UNAUTHORIZED_ERROR,
-  FILIERE_ON_DELETION_PROCCESS, FILIERE_ADDING_ERROR,FILIERE_ON_ADDING_PROCCESS,FILIERE_ON_UPDATING_PROCCESS,UPDATE_ERROR,DELETE_ERROR} from './TYPES';
+import { Add, Delete, Edit, FetchData, GoToIndex } from './FunHelpers';
 
+import {
+   DATA_RECEIVED, FILIERE_ADDING_ERROR,UPDATE_ERROR, PREVIOUS_10_ROWS, NEXT_10_ROWS,TEN_ROWS_OF_COLLECTION,
+  DATA_REFRESHED,FIRST_10_ROWS,FILIERE_PROCESSING,FILTER_FILIERE,FILTER_END
+ } 
+ from './TYPES';
 
-//helpers functions
-  const FetchData = async(url,dispatch,token)=>{
-    const headers = {
-      Authorization: token
-    }
-   return await axios.get(url,{headers})
-  .then((res)=> {
-     if (res.status!==200) return dispatch({type: FETCHING_ERROR})
-     return res.data
-   })
-   .catch((err)=>{
-    //handle UNAUTHORIZED_ERROR
-    if (err.response.data.error) {
-      return dispatch({type : UNAUTHORIZED_ERROR })
-    }
-  })
-}
 
 // Actions
-const getFilieres = () => async(dispatch) =>{
-  const token =localStorage.getItem("token")
-  dispatch({
-    type : LOADING 
-  })
-
-  if(!token) return dispatch({type : UNAUTHORIZED_ERROR })
-
-  FetchData('api/admin/filieres',dispatch,token)
-  .then(data =>{ 
-    if (!data) return dispatch({type: FETCHING_ERROR})
-    return dispatch({
-      type : DATA_RECEIVED,
-      data
-    })
-  })
-  .catch(err => dispatch({type: FETCHING_ERROR}))
+const fetchFilieres = (showLoading=true) => async(dispatch) =>{
+    await dispatch(FetchData('api/admin/filieres',DATA_RECEIVED,showLoading))
 }
 
-const addFiliere = (abvname,filiere) => async(dispatch) =>{
-  const token =localStorage.getItem("token")
-
-  if(!token) return dispatch({type : UNAUTHORIZED_ERROR })
-  //set Authorization header
-  const headers = {
-    Authorization: token
-  }
-  const data= {
-    abvname,
-    name:filiere
-  }
-  const res = await axios.post('api/admin/addfiliere',{data},{headers})
-  //handle error later
-  if (!res) return dispatch({type : FILIERE_ADDING_ERROR })
-
-   dispatch({
-     type : FILIERE_ON_ADDING_PROCCESS
-   })
-  //get filieres
-  FetchData('api/admin/filieres',dispatch,token)
-  .then(data =>
-    dispatch({
-    type : DATA_RECEIVED,
-    data
-  }))
+const getFilieres =({firstIndex, lastIndex})=> async(dispatch,getState)=> {
+    const filtering = getState().flrStore.filtering
+    const collection = !filtering ? getState().flrStore.collection: getState().flrStore.filteredFilieres
+    await dispatch(GoToIndex(collection,firstIndex,lastIndex,TEN_ROWS_OF_COLLECTION))
 }
 
-const editFiliere = ({id,abvname,name}) => async(dispatch) =>{
-  const token =localStorage.getItem("token")
-  if(!token) return dispatch({type : UNAUTHORIZED_ERROR })
-
-  const headers = {
-    Authorization: token
-  }
-  const data= {
-    abvname,
-    name
-  }
-  const res = await axios.put(`api/admin/updatefiliere/${id}`,{data},{headers})
-  if (!res) return dispatch({type : UPDATE_ERROR })
-
-  dispatch({
-    type : FILIERE_ON_UPDATING_PROCCESS
-  })
-
-  //get filieres
-  FetchData('api/admin/filieres',dispatch,token)
-  .then(data =>
-    dispatch({
-    type : DATA_RECEIVED,
-    data
-  }))
-
-}
-
-const deleteFiliere = id => async(dispatch) => {
-  const token =localStorage.getItem("token")
-
-  if(!token) return dispatch({type : UNAUTHORIZED_ERROR })
-  //delete filiere
-  const headers = {
-    Authorization: token
-  }
-  const res = await axios.delete(`api/admin/deletefiliere/${id}`,{headers})
-  //handle error later
-  if (!res) return dispatch({type : DELETE_ERROR })
-
-   dispatch({
-     type : FILIERE_ON_DELETION_PROCCESS
-   })
-  //get filieres
-    FetchData('api/admin/filieres',dispatch,token)
-    .then(data =>
+const getNextRows = ({firstIndex,lastIndex,COLLECTION_LENGTH}) => 
+ async (dispatch) =>{
+    if (lastIndex < COLLECTION_LENGTH) {
       dispatch({
-      type : DATA_RECEIVED,
-      data
-    }))
+        type : NEXT_10_ROWS,
+        firstIndex,
+        lastIndex
+      })
+    }
 }
 
+const getPrevRows = ({firstIndex,lastIndex}) => 
+ async (dispatch) =>{
+    if (firstIndex > 0) {
+      dispatch({
+        type : PREVIOUS_10_ROWS,
+        firstIndex,
+        lastIndex
+      })
+    }
+}
+
+const addFiliere = ({data,firstIndex,lastIndex}) => async(dispatch,getState) =>{
+  const collection = getState().flrStore.collection
+  const actions={
+    PROCCESSING: FILIERE_PROCESSING,
+    ERROR : FILIERE_ADDING_ERROR,
+    REFRESHED : DATA_REFRESHED
+  }
+  dispatch({type: FILIERE_PROCESSING })
+  await dispatch(Add('api/admin/addfiliere',data,collection,actions))
+  dispatch(getFilieres({firstIndex,lastIndex}))
+}
+
+const editFiliere = ({data,firstIndex,lastIndex}) => async(dispatch,getState) =>{
+
+  const collection = getState().flrStore.collection
+  const actions={
+    PROCCESSING: FILIERE_PROCESSING,
+    ERROR : UPDATE_ERROR,
+    REFRESHED : DATA_REFRESHED
+  }
+  await dispatch(Edit(`api/admin/updatefiliere/${data.id}`,data,collection,actions))
+  dispatch(getFilieres({firstIndex,lastIndex}))
+}
+
+const deleteFiliere = ({id,firstIndex,lastIndex}) => async(dispatch,getState) => {
+  
+  const collection = getState().flrStore.collection
+  const actions={
+    PROCCESSING: FILIERE_PROCESSING,
+    ERROR : FILIERE_ADDING_ERROR,
+    REFRESHED : DATA_REFRESHED
+  }
+  await dispatch(Delete(`api/admin/deletefiliere/${id}`,collection,actions))
+  dispatch(getFilieres({firstIndex,lastIndex}))
+
+  //get first 10 rows if there aren't any rows left
+  const filieres = getState().flrStore.filieres
+  if (!filieres.length>0){
+    return dispatch({
+      type: FIRST_10_ROWS
+    })
+  }
+}
+
+const FilterFilieres = ({firstIndex,lastIndex,filtertext}) => async(dispatch,getState) =>{
+  const collection = getState().flrStore.collection
+  if (filtertext) {
+    const filterdFlrs = collection.filter(flr =>
+      (String(flr.abvname).toLowerCase()).startsWith(filtertext.toLowerCase()) 
+      ||
+      (String(flr.name).toLowerCase()).startsWith(filtertext.toLowerCase())
+    )
+    await dispatch({
+      type : FILTER_FILIERE,
+      data : filterdFlrs,
+      length : filterdFlrs.length
+    })
+  }else{
+    dispatch({
+      type : FILTER_END,
+      length : collection.length
+    })
+  }
+  dispatch(getFilieres({firstIndex,lastIndex}))
+}
 
 export {
+  fetchFilieres,
   getFilieres,
   editFiliere,
   deleteFiliere,
-  addFiliere
+  addFiliere,
+  getNextRows,
+  getPrevRows,
+  FilterFilieres
 }

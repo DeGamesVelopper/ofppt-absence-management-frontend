@@ -2,7 +2,8 @@
 import { UNAUTHORIZED_ERROR ,FETCHING_ERROR} from "../actions/TYPES";
 
 const initalState= {
-  unauthorized : false
+  unauthorized : false,
+  fetching_error : false
 }
 
 const reducer = (state = initalState, action) =>{
@@ -15,7 +16,7 @@ const reducer = (state = initalState, action) =>{
     case FETCHING_ERROR:
       return{
         ...state,
-        unauthorized : true
+        fetching_error : true
       }
   
     default:

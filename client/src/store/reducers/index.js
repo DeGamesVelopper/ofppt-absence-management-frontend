@@ -8,7 +8,7 @@ import authReducer from './authReducer';
 const reducer = combineReducers({
    flrStore : filiereReducer,
    errorsStore: errorsReducer,
-   auth: authReducer
+   auth: authReducer,
 })
 
 export default reducer

@@ -242,9 +242,9 @@ export const LogOutIcon = ({className}) => {
 }
 
 
-export const NextIcon = ({className}) => {
+export const NextIcon = ({className,onClick}) => {
   return (
-      <div className = {`${className}`}>
+      <div className = {`${className}`} onClick ={onClick}>
         <div 
          className="svg"
          style={{display:"flex", alignItems: "center" , justifyContent: "center"}}
@@ -267,9 +267,9 @@ export const NextIcon = ({className}) => {
   )
 }
 
-export const PreviousIcon = ({className}) => {
+export const PreviousIcon = ({className,onClick}) => {
   return (
-      <div className = {`${className}`}>
+      <div className = {`${className}`}  onClick ={onClick}>
         <div 
         className="svg"
         style={{display:"flex", alignItems: "center" , justifyContent: "center"}}

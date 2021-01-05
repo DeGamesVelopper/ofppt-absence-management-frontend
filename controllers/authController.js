@@ -2,6 +2,7 @@
 const Admin = require('../models/admin')
 const bcrypt = require('bcryptjs')
 const Error = require('http-errors')
+const jwt = require('jsonwebtoken')
 const {signToken} = require('../helpers/jwtHelpers')
 
 const logIn = async(req,res,next)=>{
@@ -23,6 +24,21 @@ const logIn = async(req,res,next)=>{
   }
 }
 
+const isTokenValid = async(req,res,next) =>{
+  const {token} = req.body
+  if (!token) return next(Error.Unauthorized())
+  try {
+    jwt.verify(token, process.env.SECRET_KEY, (err,payload)=>{
+      if (err) return next(Error.Unauthorized())
+      res.json({token})
+    })
+  } catch (error) {
+     return next(error)
+  }
+  
+}
+
 module.exports = {
-  logIn
+  logIn,
+  isTokenValid
 }

@@ -35,8 +35,8 @@ const Navbar = ()=> {
                 <Link to={islogin ? '/' : '/login'} className="nav__logo" id='nav__logo'>
                     <img className='nav__logoIcon' id='nav__logoIcon' src="images/ofppt_logo.svg" alt="logo"/>
                 </Link>
-
-                <div className="nav__list">
+                {islogin ?
+                  <div className="nav__list">
                     <Link to='/filieres' className="nav__link">
                         <FiliereIcon  className="nav__Icon"/>
                         <span className="nav__name">Filiere</span>
@@ -67,12 +67,18 @@ const Navbar = ()=> {
                         <span className="nav__name">Absences</span>
                     </Link>
                 </div>
+                  : null
+                }
               </div>
 
-              <Link to='/login' className="nav__link" onClick = {()=>dispatch(logout())}>
+             { 
+              islogin ?
+             <Link to='/login' className="nav__link" onClick = {()=>dispatch(logout())}>
                   <LogOutIcon className="nav__Icon" />
                   <span className="nav__name">Log Out</span>
-                </Link>
+              </Link>
+              :null
+            }
            </nav>
         </div>
      

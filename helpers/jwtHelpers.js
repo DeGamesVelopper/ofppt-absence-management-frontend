@@ -20,16 +20,16 @@ const signToken = (id)=>{
 
 const verifyToken = (req,res,next)=>{
    
-    const token = req.headers['authorization']
+    const token = req.headers['authorization']  
     if (!token) return next(Error.Unauthorized())
     try {
         jwt.verify(token, process.env.SECRET_KEY, (err,payload)=>{
           if (err) return next(Error.Unauthorized())
           req.payload = payload.aud
-          next()
+          return next()
         })
     } catch (error) {
-       next(error)
+       return next(error)
     }
 }
 
