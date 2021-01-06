@@ -1,10 +1,13 @@
 
-import React,{ useState  } from 'react';
+import React,{ useState , useEffect  } from 'react';
 import { useSelector ,useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {CloseIcon, MenuIcon ,GroupIcon , FiliereIcon, StagiaireIcon, AbsenceIcon, ModuleIcon, FormateurIcon, LogOutIcon} from '../../Icons'
 
 import { logout } from '../../store/actions/authActions';
+import { ADD__NAVBAR__EVENTS ,CLEAN__NAVBAR__EVENTS} from './JS';
+
+
 import "./navbar.css";
 
 const Navbar = ()=> {
@@ -13,6 +16,18 @@ const Navbar = ()=> {
 
  const islogin = useSelector(state => state.auth.islogin)
  const dispatch = useDispatch()
+
+
+ useEffect(() => {
+   ADD__NAVBAR__EVENTS()
+   return () => CLEAN__NAVBAR__EVENTS()
+ }, []);
+
+ useEffect(() => {
+  ADD__NAVBAR__EVENTS()
+  return () => CLEAN__NAVBAR__EVENTS()
+ }, [islogin]);
+
 
   return (
     <>
@@ -32,13 +47,13 @@ const Navbar = ()=> {
       <div className="l-navbar" id="nav-bar">
            <nav className="nav">
               <div className ="nav__content">
-                <Link to={islogin ? '/' : '/login'} className="nav__logo" id='nav__logo'>
+                <Link to={islogin ? '/' : '/login'} className="nav__logo nav__logo__active" id='nav__logo'>
                     <img className='nav__logoIcon' id='nav__logoIcon' src="images/ofppt_logo.svg" alt="logo"/>
                 </Link>
                 {islogin ?
                   <div className="nav__list">
                     <Link to='/filieres' className="nav__link">
-                        <FiliereIcon  className="nav__Icon"/>
+                        <FiliereIcon  className="nav__Icon "/>
                         <span className="nav__name">Filiere</span>
                     </Link>
 
@@ -81,7 +96,6 @@ const Navbar = ()=> {
             }
            </nav>
         </div>
-     
     </>
   
   )

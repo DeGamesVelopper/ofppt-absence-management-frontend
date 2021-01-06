@@ -84,7 +84,6 @@
   border-radius: 3rem;
 }
 
-
 .nav__logoIcon{
   width: 3rem;
 }
@@ -115,11 +114,11 @@
 .show{
   left: 0;
 }
-.nav__active{
+.nav__Icon__active{
   fill: #ffffff;
   color: #ffffff;
 }
-.active::before{
+.nav__active::before{
   content: '';
   position: absolute;
   left: 0;
