@@ -8,23 +8,24 @@ function CustomInput({
   search = false,
   searchIconStyle,
   filter = () => {},
+  type = "text",
 }) {
   return (
     <div className={`customInput__cantainer ${className}`}>
       <input
         className={`${search ? "pl" : ""}`}
-        type="text"
+        type={type}
         placeholder={placeholder}
         value={value}
         onChange={e => setValue(e.target.value)}
         onKeyUpCapture={() => filter()}
         required
-      />
+      />{" "}
       {search ? (
         <div className={`customInput__searchIcon flex_row ${searchIconStyle}`}>
           <img src="images/searchIcon.svg" alt="searchingIcon" />
         </div>
-      ) : null}
+      ) : null}{" "}
     </div>
   );
 }

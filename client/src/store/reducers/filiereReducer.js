@@ -46,6 +46,7 @@ const reducer = (state = initalState, action) => {
       return {
         ...state,
         filieres: action.data,
+        isloading: false,
       };
     case FILTER_FILIERE:
       return {

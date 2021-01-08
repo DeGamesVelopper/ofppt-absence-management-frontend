@@ -1,27 +1,20 @@
+import { FETCHING_ERROR } from "../actions/TYPES";
 
-import { UNAUTHORIZED_ERROR ,FETCHING_ERROR} from "../actions/TYPES";
+const initalState = {
+  fetching_error: false,
+};
 
-const initalState= {
-  unauthorized : false,
-  fetching_error : false
-}
-
-const reducer = (state = initalState, action) =>{
+const reducer = (state = initalState, action) => {
   switch (action.type) {
-    case UNAUTHORIZED_ERROR:
-      return{
-        ...state,
-        unauthorized : true
-      }
     case FETCHING_ERROR:
-      return{
+      return {
         ...state,
-        fetching_error : true
-      }
-  
-    default:
-      return state
-  }
-}
+        fetching_error: true,
+      };
 
-export default reducer
+    default:
+      return state;
+  }
+};
+
+export default reducer;

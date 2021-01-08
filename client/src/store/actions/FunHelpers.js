@@ -141,7 +141,15 @@ const Edit = (
     const headers = {
       Authorization: token,
     };
-    const res = await axios.put(url, { data }, { headers });
+    const res = await axios.put(
+      url,
+      {
+        data,
+      },
+      {
+        headers,
+      }
+    );
     const updateddObj = res.data;
     if (!updateddObj)
       return dispatch({

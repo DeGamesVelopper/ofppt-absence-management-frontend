@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { getLocalToken } from "./store/actions/FunHelpers";
 
@@ -17,11 +17,10 @@ import "./App.css";
 
 export default function App() {
   const dispatch = useDispatch();
-  const islogin = useSelector(state => state.auth.islogin);
 
   useEffect(() => {
     const getToken = async () => {
-      await dispatch(await getLocalToken());
+      await dispatch(getLocalToken());
     };
     getToken();
   }, []);
@@ -30,9 +29,7 @@ export default function App() {
     <div className="app" id="app">
       <BrowserRouter>
         <Navbar />
-        {!islogin ? (
-          <Redirect to="/login" />
-        ) : (
+        {
           <div className="body">
             <Switch>
               <Route exact path="/login" component={Login} />
@@ -42,7 +39,7 @@ export default function App() {
               <Route component={_404} />
             </Switch>
           </div>
-        )}
+        }
       </BrowserRouter>
     </div>
   );
