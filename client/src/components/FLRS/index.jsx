@@ -13,14 +13,15 @@ import {
   getPrevRows,
   FilterFilieres,
 } from "../../store/actions/filiereActions";
+import { Redirect } from "react-router-dom";
 
 const Filiere = () => {
   //redux states
-  const isloading = useSelector(state => state.flrStore.isloading);
   const onCRUDAction = useSelector(state => state.flrStore.onCRUDAction);
   const filiereCollection = useSelector(state => state.flrStore.filieres);
   const COLLECTION_LENGTH = useSelector(state => state.flrStore.length);
   const currentIndex = useSelector(state => state.flrStore.currentIndex);
+  const islogin = useSelector(state => state.auth.islogin);
 
   //loacl states
   const [newFiliere, setNewFiliere] = useState({ name: "", abvname: "" });
@@ -39,7 +40,9 @@ const Filiere = () => {
       setValue: val => setNewFiliere({ ...newFiliere, name: val }),
     },
   ];
-  return (
+  return !islogin ? (
+    <Redirect to="/login" />
+  ) : (
     <CRUD
       _STATE={{
         _Value: newFiliere,
@@ -60,7 +63,7 @@ const Filiere = () => {
         SearchPlaceholeder: "Recherche du filière",
         FilterCollection: FilterFilieres,
       }}
-      LOADING={{ isloading, onCRUDAction }}
+      LOADING={{ onCRUDAction }}
       TABLE_DATA={{
         Collection: filiereCollection,
         Headers: ["Abréviation", "Filière"],

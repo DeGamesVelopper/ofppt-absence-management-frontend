@@ -27,7 +27,7 @@ const CRUD = ({
   const { Create_Modal_title, AddObject, Create_Inputs } = NEW;
   const { Update_Modal_title, EditObject } = EDIT;
   const { SearchPlaceholeder, FilterCollection } = SEARCH;
-  const { isloading, onCRUDAction } = LOADING;
+  const { onCRUDAction } = LOADING;
   const {
     Collection,
     Headers,
@@ -44,29 +44,28 @@ const CRUD = ({
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [isloading, setIsloading] = useState(true);
 
   const [ID, setID] = useState("");
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (Collection?.length === 0) {
-      const fetchData = async () => {
-        await dispatch(FETCHDATA());
-        await dispatch(Get_Ten_Rows(CurrentIndex));
-        setData(Collection);
-      };
-      fetchData();
-    }
-  }, []);
-
-  useEffect(() => {
-    dispatch(Get_Ten_Rows(CurrentIndex));
-  }, [dispatch, CurrentIndex, Get_Ten_Rows]);
+    const fetchData = async () => {
+      setIsloading(true);
+      await dispatch(FETCHDATA({ firstIndex: 0, lastIndex: 10 }));
+      setIsloading(false);
+    };
+    fetchData();
+  }, [dispatch, FETCHDATA]);
 
   useEffect(() => {
     setData(Collection);
   }, [Collection]);
+
+  useEffect(() => {
+    dispatch(Get_Ten_Rows(CurrentIndex));
+  }, [CurrentIndex, dispatch, Get_Ten_Rows]);
 
   const getNext10Row = () => {
     dispatch(Next_Ten_Rows({ ...CurrentIndex, COLLECTION_LENGTH }));
@@ -128,7 +127,9 @@ const CRUD = ({
     _SetValue({});
   };
 
-  return (
+  return isloading ? (
+    <PageLoading className="CRUD__loading" />
+  ) : (
     <>
       {
         /* create or update*/
@@ -160,9 +161,7 @@ const CRUD = ({
           />
         ) : null
       }
-      {isloading ? (
-        <PageLoading className="CRUD__loading" />
-      ) : (
+      {
         <div className="CRUD__content">
           {/* search and add new */}
           <div className="CRUD__search__add">
@@ -194,7 +193,7 @@ const CRUD = ({
             Previous={() => getPrev10Row()}
           />
         </div>
-      )}
+      }
     </>
   );
 };

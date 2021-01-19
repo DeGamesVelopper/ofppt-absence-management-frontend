@@ -16,10 +16,9 @@ import {
 } from "./TYPES";
 
 // Actions
-const fetchFilieres = (showLoading = true) => async dispatch => {
-  await dispatch(
-    await FetchData("api/admin/filieres", DATA_RECEIVED, showLoading)
-  );
+const fetchFilieres = ({ firstIndex, lastIndex }) => async dispatch => {
+  await dispatch(FetchData("api/admin/filieres", DATA_RECEIVED));
+  await dispatch(get_Ten_Filieres({ firstIndex, lastIndex }));
 };
 
 const get_Ten_Filieres = ({ firstIndex, lastIndex }) => async (
@@ -30,8 +29,8 @@ const get_Ten_Filieres = ({ firstIndex, lastIndex }) => async (
   const collection = !filtering
     ? getState().flrStore.collection
     : getState().flrStore.filteredFilieres;
-  await dispatch(
-    await GoToIndex(collection, firstIndex, lastIndex, TEN_ROWS_OF_COLLECTION)
+  return dispatch(
+    GoToIndex(collection, firstIndex, lastIndex, TEN_ROWS_OF_COLLECTION)
   );
 };
 
@@ -119,11 +118,10 @@ const deleteFiliere = ({ id, firstIndex, lastIndex }) => async (
       lastIndex,
     })
   );
-
   //get first 10 rows if there aren't any rows left
   const filieres = getState().flrStore.filieres;
   if (!filieres.length > 0) {
-    return dispatch({
+    dispatch({
       type: FIRST_10_ROWS,
     });
   }
@@ -142,7 +140,10 @@ const FilterFilieres = ({ firstIndex, lastIndex, filtertext }) => async (
           .startsWith(filtertext.toLowerCase()) ||
         String(flr.name).toLowerCase().startsWith(filtertext.toLowerCase())
     );
-    if (!filterdFlrs) return dispatch({ type: FILTER_FILIERE_NOT_FOUND });
+    if (!filterdFlrs)
+      return dispatch({
+        type: FILTER_FILIERE_NOT_FOUND,
+      });
     await dispatch({
       type: FILTER_FILIERE,
       data: filterdFlrs,

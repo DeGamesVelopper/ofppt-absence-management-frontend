@@ -12,19 +12,19 @@ const getToken = () => {
   return !token ? null : token;
 };
 
-const FetchData = async (
+const FetchData = (
   url,
   SUCCES_ACTION,
   showLoading = true
 ) => async dispatch => {
   try {
     if (showLoading)
-      await dispatch({
+      dispatch({
         type: LOADING,
       });
     const token = getToken();
     if (!token)
-      return await dispatch({
+      return dispatch({
         type: UNAUTHORIZED_ERROR,
       });
     const headers = {
@@ -34,27 +34,27 @@ const FetchData = async (
       headers,
     });
     if (!res.data)
-      return await dispatch({
+      return dispatch({
         type: FETCHING_ERROR,
       });
-    return await dispatch({
+    return dispatch({
       type: SUCCES_ACTION,
       data: res.data.collection,
       length: res.data.length,
     });
   } catch (error) {
-    dispatch({
+    return dispatch({
       type: UNAUTHORIZED_ERROR,
     });
   }
 };
 
-const GoToIndex = async (
+const GoToIndex = (
   collection,
   firstIndex,
   lastIndex,
   SUCCES_ACTION
-) => async dispatch => {
+) => dispatch => {
   if (!collection)
     return dispatch({
       type: FETCHING_ERROR,
@@ -65,7 +65,7 @@ const GoToIndex = async (
     if (elem) col.push(elem);
   }
   if (col)
-    await dispatch({
+    return dispatch({
       type: SUCCES_ACTION,
       data: col,
     });
@@ -87,8 +87,11 @@ const RefreshData = (obj, collection, action, REFRESHED) => async dispatch => {
 const Add = (
   url,
   data,
-  collection,
-  { PROCCESSING, ERROR, REFRESHED }
+  collection, {
+    PROCCESSING,
+    ERROR,
+    REFRESHED
+  }
 ) => async dispatch => {
   try {
     const token = getToken();
@@ -102,11 +105,9 @@ const Add = (
     };
     //check if data not empty
     const res = await axios.post(
-      url,
-      {
+      url, {
         data,
-      },
-      {
+      }, {
         headers,
       }
     );
@@ -129,8 +130,11 @@ const Add = (
 const Edit = (
   url,
   data,
-  collection,
-  { PROCCESSING, ERROR, REFRESHED }
+  collection, {
+    PROCCESSING,
+    ERROR,
+    REFRESHED
+  }
 ) => async dispatch => {
   try {
     const token = getToken();
@@ -142,11 +146,9 @@ const Edit = (
       Authorization: token,
     };
     const res = await axios.put(
-      url,
-      {
+      url, {
         data,
-      },
-      {
+      }, {
         headers,
       }
     );
@@ -171,8 +173,11 @@ const Edit = (
 
 const Delete = (
   url,
-  collection,
-  { PROCCESSING, ERROR, REFRESHED }
+  collection, {
+    PROCCESSING,
+    ERROR,
+    REFRESHED
+  }
 ) => async dispatch => {
   try {
     const token = getToken();
@@ -196,7 +201,7 @@ const Delete = (
       type: PROCCESSING,
     });
     //refresh data
-    await dispatch(
+    dispatch(
       RefreshData(deletedObj, collection, Action.delete, REFRESHED)
     );
   } catch (error) {
@@ -218,13 +223,13 @@ const getLocalToken = () => async dispatch => {
         type: UNAUTHORIZED_ERROR,
       });
     const res = await axios.post("api/admin/checkToken", {
-      token,
+      token
     });
     if (!res.data)
       return dispatch({
         type: UNAUTHORIZED_ERROR,
       });
-    await dispatch({
+    dispatch({
       type: LOGIN__SUCCESS,
       token: res.data.token,
     });
@@ -241,4 +246,11 @@ const Action = Object.freeze({
   delete: "delete",
 });
 
-export { FetchData, GoToIndex, Add, Edit, Delete, getLocalToken };
+export {
+  FetchData,
+  GoToIndex,
+  Add,
+  Edit,
+  Delete,
+  getLocalToken
+};

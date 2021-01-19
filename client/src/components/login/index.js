@@ -9,9 +9,11 @@ import Input from "../Controls/CustomInput";
 import "./login.css";
 
 function Login() {
+  //local states
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
+  //redux states
   const isloading = useSelector(state => state.auth.isloading);
   const islogin = useSelector(state => state.auth.islogin);
   const dispatch = useDispatch();
@@ -20,41 +22,38 @@ function Login() {
     dispatch(login(username, pwd));
   };
 
-  return (
+  return islogin ? (
+    <Redirect to="/" />
+  ) : (
     <>
-      {" "}
-      {islogin ? (
-        <Redirect to="/" />
-      ) : (
-        <div className="login flex_column">
-          <div>
-            <h1 className="login__title"> Login </h1>{" "}
-          </div>{" "}
-          <Input
-            className="login__input"
-            placeholder="username"
-            value={username}
-            setValue={setUsername}
-          />{" "}
-          <Input
-            className="login__input"
-            placeholder="password"
-            value={pwd}
-            setValue={setPwd}
-            type="password"
-          />
-          <button className="login__btn" onClick={() => tryLogin()}>
-            <span className="login__btntxt">Login </span>{" "}
-            {isloading ? (
-              <img
-                className="login__loading"
-                src="images/Login_loading.svg"
-                alt="loginSvg"
-              />
-            ) : null}{" "}
-          </button>{" "}
+      <form className="login flex_column" onSubmit={e => e.preventDefault()}>
+        <div>
+          <h1 className="login__title"> Login </h1>
         </div>
-      )}{" "}
+        <Input
+          className="login__input"
+          placeholder="username"
+          value={username}
+          setValue={setUsername}
+        />
+        <Input
+          className="login__input"
+          placeholder="password"
+          value={pwd}
+          setValue={setPwd}
+          type="password"
+        />
+        <button className="login__btn" onClick={() => tryLogin()}>
+          <span className="login__btntxt"> Login </span>
+          {isloading ? (
+            <img
+              className="login__loading"
+              src="images/Login_loading.svg"
+              alt="loginSvg"
+            />
+          ) : null}
+        </button>
+      </form>
     </>
   );
 }

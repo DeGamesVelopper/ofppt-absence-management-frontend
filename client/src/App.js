@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getLocalToken } from "./store/actions/FunHelpers";
 
@@ -18,29 +18,25 @@ import "./App.css";
 export default function App() {
   const dispatch = useDispatch();
 
+  //check if we are login
   useEffect(() => {
-    const getToken = async () => {
-      await dispatch(getLocalToken());
-    };
-    getToken();
-  }, []);
+    dispatch(getLocalToken());
+  }, [dispatch]);
 
   return (
-    <div className="app" id="app">
-      <BrowserRouter>
+    <BrowserRouter>
+      <div className="app" id="app">
         <Navbar />
-        {
-          <div className="body">
-            <Switch>
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/" component={Home} />
-              <Route exact path="/filieres" component={FLR} />
-              <Route exact path="/groups" component={Group} />
-              <Route component={_404} />
-            </Switch>
-          </div>
-        }
-      </BrowserRouter>
-    </div>
+        <div className="body">
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/filieres" component={FLR} />
+            <Route exact path="/groups" component={Group} />
+            <Route component={_404} />
+          </Switch>
+        </div>
+      </div>
+    </BrowserRouter>
   );
 }
