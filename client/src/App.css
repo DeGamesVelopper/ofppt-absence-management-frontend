@@ -2,53 +2,75 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
 
 /*===== VARIABLES CSS =====*/
-:root{
+:root {
   --header-height: 3rem;
   --nav-width: 4rem;
-  --navFull-width :9.75rem;
+  --navFull-width: 9.75rem;
 
   /*===== Colors =====*/
   --first-color: #4723D9;
   --first-color-light: #AFA5D9;
   --white-color: #F7F6FB;
-  
+
   /*===== Font and typography =====*/
-  --default-font: 'Nunito', sans-serif;
+  --Nunito-font: 'Nunito', sans-serif;
   --normal-font-size: 1rem;
-  
+
 }
 
 /*===== BASE =====*/
-*,::before,::after{
+*,
+::before,
+::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
-body{
-  font-family: var(--default-font);
+body {
+  font-family: var(--Nunito-font);
 }
 
-.app{
+.app {
   height: calc(100vh - var(--header-height));
   margin-top: var(--header-height);
   transition: .5s;
   min-height: 100vh;
-
 }
 
-.body{
+.body {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   position: relative;
 
 }
 
+/* scrollbar customazition */
+/* width */
+::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 /* Global css */
-.Icon{
+.Icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,27 +84,27 @@ body{
   background-color: #EFF0F0;
 }
 
-.flex_column{
+.flex_column {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.flex_row{
+.flex_row {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-.Modal__container{
+.Modal__container {
   width: 100%;
   height: 100%;
   position: absolute;
-  top :0;
+  top: 0;
   background-color: #80808048;
   z-index: 300;
   display: flex;
@@ -90,19 +112,19 @@ a{
 }
 
 /* apply on js */
-.app__menu__toggled{
+.app__menu__toggled {
   padding-left: var(--nav-width);
 }
 
 
 /* ===== MEDIA QUERIES=====*/
-@media screen and (min-width: 768px){
- .app{
+@media screen and (min-width: 768px) {
+  .app {
     padding-left: var(--nav-width);
   }
-  
+
   /* apply on js */
-  .app__menu__toggled{
+  .app__menu__toggled {
     padding-left: calc(var(--nav-width) + 9.729rem);
   }
 }

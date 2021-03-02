@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
-import CRUD from "../CRUD";
-
+import { Redirect } from "react-router-dom";
 import {
   fetchFilieres,
   get_Ten_Filieres,
@@ -13,7 +11,8 @@ import {
   getPrevRows,
   FilterFilieres,
 } from "../../store/actions/filiereActions";
-import { Redirect } from "react-router-dom";
+
+import Crud from "../CRUD/";
 
 const Filiere = () => {
   //redux states
@@ -43,7 +42,7 @@ const Filiere = () => {
   return !islogin ? (
     <Redirect to="/login" />
   ) : (
-    <CRUD
+    <Crud
       _STATE={{
         _Value: newFiliere,
         _SetValue: setNewFiliere,
@@ -62,6 +61,7 @@ const Filiere = () => {
       SEARCH={{
         SearchPlaceholeder: "Recherche du filière",
         FilterCollection: FilterFilieres,
+        searchIconBgColor: "#0D0E14",
       }}
       LOADING={{ onCRUDAction }}
       TABLE_DATA={{

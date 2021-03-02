@@ -44,7 +44,7 @@ export const CloseIcon = ({ className }) => {
           xmlns="http://www.w3.org/2000/svg"
           enableBackground="new 0 0 512 512"
           viewBox="0 0 348.333 348.334"
-          style={{ width: "inherit", height: "inherit" }}
+          style={{ width: "inherit", height: "inherit", color: "inherit" }}
         >
           <path
             xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ export const FiliereIcon = ({ className }) => {
         xmlns="http://www.w3.org/2000/svg"
         enableBackground="new 0 0 512 512"
         viewBox="0 0 97.391 97.391"
-        style={{ width: "inherit", height: "inherit" }}
+        style={{ width: "inherit", height: "inherit", color: "inherit" }}
       >
         <path
           xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ export const GroupIcon = ({ className }) => {
         xmlns="http://www.w3.org/2000/svg"
         enableBackground="new 0 0 512 512"
         viewBox="0 0 511.999 511.999"
-        style={{ width: "inherit", height: "inherit" }}
+        style={{ width: "inherit", height: "inherit", color: "inherit" }}
       >
         <path
           xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@ export const StagiaireIcon = ({ className }) => {
         xmlns="http://www.w3.org/2000/svg"
         enableBackground="new 0 0 512 512"
         viewBox="0 0 511.951 511.951"
-        style={{ width: "inherit", height: "inherit" }}
+        style={{ width: "inherit", height: "inherit", color: "inherit" }}
       >
         <g xmlns="http://www.w3.org/2000/svg">
           <path
@@ -155,7 +155,7 @@ export const FormateurIcon = ({ className }) => {
         xmlns="http://www.w3.org/2000/svg"
         enableBackground="new 0 0 512 512"
         viewBox="0 0 512 512"
-        style={{ width: "inherit", height: "inherit" }}
+        style={{ width: "inherit", height: "inherit", color: "inherit" }}
       >
         <path
           xmlns="http://www.w3.org/2000/svg"
@@ -196,7 +196,7 @@ export const ModuleIcon = ({ className }) => {
         xmlns="http://www.w3.org/2000/svg"
         enableBackground="new 0 0 512 512"
         viewBox="0 0 296.999 296.999"
-        style={{ width: "inherit", height: "inherit" }}
+        style={{ width: "inherit", height: "inherit", color: "inherit" }}
       >
         <g xmlns="http://www.w3.org/2000/svg">
           <path
@@ -227,7 +227,7 @@ export const AbsenceIcon = ({ className }) => {
         xmlns="http://www.w3.org/2000/svg"
         enableBackground="new 0 0 512 512"
         viewBox="0 0 361.77 361.77"
-        style={{ width: "inherit", height: "inherit" }}
+        style={{ width: "inherit", height: "inherit", color: "inherit" }}
       >
         <g xmlns="http://www.w3.org/2000/svg">
           <path
@@ -258,7 +258,7 @@ export const LogOutIcon = ({ className }) => {
         xmlns="http://www.w3.org/2000/svg"
         enableBackground="new 0 0 512 512"
         viewBox="0 0 297 297"
-        style={{ width: "inherit", height: "inherit" }}
+        style={{ width: "inherit", height: "inherit", color: "inherit" }}
       >
         <g xmlns="http://www.w3.org/2000/svg">
           <path
@@ -290,7 +290,7 @@ export const NextIcon = ({ className, onClick }) => {
           xmlns="http://www.w3.org/2000/svg"
           enableBackground="new 0 0 512 512"
           viewBox="0 0 492.004 492.004"
-          style={{ width: "inherit", height: "inherit" }}
+          style={{ width: "inherit", height: "inherit", color: "inherit" }}
         >
           <path
             xmlns="http://www.w3.org/2000/svg"
@@ -318,7 +318,7 @@ export const PreviousIcon = ({ className, onClick }) => {
           xmlns="http://www.w3.org/2000/svg"
           enableBackground="new 0 0 512 512"
           viewBox="0 0 492.004 492.004"
-          style={{ width: "inherit", height: "inherit" }}
+          style={{ width: "inherit", height: "inherit", color: "inherit" }}
         >
           <path
             xmlns="http://www.w3.org/2000/svg"
@@ -346,9 +346,63 @@ export const AddIcon = ({ className, onClick }) => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 448"
-          style={{ width: "inherit", height: "inherit" }}
+          style={{ width: "inherit", height: "inherit", color: "inherit" }}
         >
           <path d="M408 184H272a8 8 0 01-8-8V40c0-22.09-17.91-40-40-40s-40 17.91-40 40v136a8 8 0 01-8 8H40c-22.09 0-40 17.91-40 40s17.91 40 40 40h136a8 8 0 018 8v136c0 22.09 17.91 40 40 40s40-17.91 40-40V272a8 8 0 018-8h136c22.09 0 40-17.91 40-40s-17.91-40-40-40zm0 0"></path>
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+export const SearchIcon = ({ className, onClick }) => {
+  return (
+    <div onClick={onClick} className={`${className}`}>
+      <div
+        className="svg"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          enableBackground="new 0 0 512 512"
+          viewBox="0 0 512.542 512.542"
+          style={{ width: "inherit", height: "inherit", color: "inherit" }}
+        >
+          <path
+            xmlns="http://www.w3.org/2000/svg"
+            d="M481.28 376.961l-71.68-53.76c17.92-30.72 25.6-66.56 25.6-104.96 0-120.32-97.28-217.6-217.6-217.6S0 97.921 0 218.24s97.28 217.6 217.6 217.6c38.4 0 71.68-10.24 104.96-25.6l53.76 71.68c28.16 35.84 81.92 40.96 115.2 7.68 30.72-30.72 28.16-84.48-10.24-112.639zm-263.68 7.68c-92.16 0-166.4-74.24-166.4-166.4s74.24-166.4 166.4-166.4S384 126.081 384 218.24s-74.24 166.401-166.4 166.401z"
+          ></path>
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+export const EditIcon = ({ className, onClick }) => {
+  return (
+    <div onClick={onClick} className={`${className}`}>
+      <div
+        className="svg"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          enableBackground="new 0 0 512 512"
+          viewBox="0 0 512.001 512.001"
+          style={{ width: "inherit", height: "inherit", color: "inherit" }}
+        >
+          <path
+            xmlns="http://www.w3.org/2000/svg"
+            d="M496.063 62.299l-46.396-46.4c-21.199-21.199-55.689-21.198-76.888 0L27.591 361.113c-2.17 2.17-3.624 5.054-4.142 7.875L.251 494.268a15.002 15.002 0 0017.48 17.482L143 488.549c2.895-.54 5.741-2.008 7.875-4.143l345.188-345.214c21.248-21.248 21.251-55.642 0-76.893zM33.721 478.276l14.033-75.784 61.746 61.75-75.779 14.034zm106.548-25.691L59.41 371.721 354.62 76.488l80.859 80.865-295.21 295.232zM474.85 117.979l-18.159 18.161-80.859-80.865 18.159-18.161c9.501-9.502 24.96-9.503 34.463 0l46.396 46.4c9.525 9.525 9.525 24.939 0 34.465z"
+          ></path>
         </svg>
       </div>
     </div>

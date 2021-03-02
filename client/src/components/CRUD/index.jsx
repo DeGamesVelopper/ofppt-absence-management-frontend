@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import PopUpModal from "../Modals/PopUpModal";
+import PopUpModal from "../Modals/PopUpModal/";
 import ConfirmModal from "../Modals/ConfirmDeletionModal";
-import SearchInput from "../Controls/CustomInput";
-import Table from "../Controls/Table";
+import CustomInput from "../Controls/CustomInput/";
+import Table from "../Controls/Table/";
 
 import PageLoading from "../Controls/Loading/pageLoading";
 import { AddIcon } from "../../Icons";
 
 import "./CRUD.css";
-import CustomInput from "../Controls/CustomInput";
 
 const CRUD = ({
   _STATE,
@@ -26,7 +25,7 @@ const CRUD = ({
   const { _Value, _SetValue } = _STATE;
   const { Create_Modal_title, AddObject, Create_Inputs } = NEW;
   const { Update_Modal_title, EditObject } = EDIT;
-  const { SearchPlaceholeder, FilterCollection } = SEARCH;
+  const { SearchPlaceholeder, FilterCollection, searchIconBgColor } = SEARCH;
   const { onCRUDAction } = LOADING;
   const {
     Collection,
@@ -36,6 +35,7 @@ const CRUD = ({
     Get_Ten_Rows,
     Next_Ten_Rows,
     Previous_Ten_Rows,
+    headerColor,
   } = TABLE_DATA;
 
   // loacl state
@@ -53,7 +53,12 @@ const CRUD = ({
   useEffect(() => {
     const fetchData = async () => {
       setIsloading(true);
-      await dispatch(FETCHDATA({ firstIndex: 0, lastIndex: 10 }));
+      await dispatch(
+        FETCHDATA({
+          firstIndex: 0,
+          lastIndex: 10,
+        })
+      );
       setIsloading(false);
     };
     fetchData();
@@ -68,7 +73,12 @@ const CRUD = ({
   }, [CurrentIndex, dispatch, Get_Ten_Rows]);
 
   const getNext10Row = () => {
-    dispatch(Next_Ten_Rows({ ...CurrentIndex, COLLECTION_LENGTH }));
+    dispatch(
+      Next_Ten_Rows({
+        ...CurrentIndex,
+        COLLECTION_LENGTH,
+      })
+    );
   };
 
   const getPrev10Row = () => {
@@ -76,7 +86,12 @@ const CRUD = ({
   };
 
   const filter = () => {
-    dispatch(FilterCollection({ ...CurrentIndex, filtertext: searchInput }));
+    dispatch(
+      FilterCollection({
+        ...CurrentIndex,
+        filtertext: searchInput,
+      })
+    );
   };
 
   const handleEdit = () => {
@@ -86,7 +101,12 @@ const CRUD = ({
         id: ID,
         ..._Value,
       };
-      dispatch(EditObject({ data, ...CurrentIndex }));
+      dispatch(
+        EditObject({
+          data,
+          ...CurrentIndex,
+        })
+      );
       _SetValue({});
       setID("");
       return true;
@@ -95,13 +115,23 @@ const CRUD = ({
 
   const handleDelete = id => {
     setSearchInput("");
-    dispatch(DELETE({ id, ...CurrentIndex }));
+    dispatch(
+      DELETE({
+        id,
+        ...CurrentIndex,
+      })
+    );
     setID("");
   };
 
   const handleAdd = () => {
     if (_Value) {
-      dispatch(AddObject({ data: _Value, ...CurrentIndex }));
+      dispatch(
+        AddObject({
+          data: _Value,
+          ...CurrentIndex,
+        })
+      );
       _SetValue({});
       return true;
     } else return false;
@@ -111,7 +141,9 @@ const CRUD = ({
     setShowUpdateModal(true);
     const obj = Collection.find(col => col._id === id);
     setID(obj._id);
-    _SetValue({ ...obj });
+    _SetValue({
+      ...obj,
+    });
   };
 
   const OpenDeleteModal = id => {
@@ -152,8 +184,7 @@ const CRUD = ({
               />
             ))}
           </PopUpModal>
-        ) : /* delete */
-        showConfirmModal ? (
+        ) : /* delete */ showConfirmModal ? (
           <ConfirmModal
             text="Voulez-vous vraiment supprimer ce filiere?"
             Delete={() => handleDelete(ID)}
@@ -170,14 +201,15 @@ const CRUD = ({
               onClick={() => setShowCreateModal(true)}
               className="Icon CRUD__content__addIcon"
             />
-            {/* custom input */}
-            <SearchInput
+            {/* search custom input */}
+            <CustomInput
               className="CRUD__Input"
               value={searchInput}
               setValue={setSearchInput}
               placeholder={SearchPlaceholeder}
               search={true}
               filter={filter}
+              searchIconBgColor={searchIconBgColor}
             />
           </div>
           {/* table */}
@@ -191,6 +223,7 @@ const CRUD = ({
             CurrentIndex={CurrentIndex}
             Next={() => getNext10Row()}
             Previous={() => getPrev10Row()}
+            headerColor={headerColor}
           />
         </div>
       }

@@ -1,3 +1,4 @@
+import { SearchIcon } from "../../../Icons";
 import "./customInput.css";
 
 function CustomInput({
@@ -6,7 +7,7 @@ function CustomInput({
   setValue,
   placeholder,
   search = false,
-  searchIconStyle,
+  searchIconBgColor,
   filter = () => {},
   type = "text",
 }) {
@@ -20,12 +21,13 @@ function CustomInput({
         onChange={e => setValue(e.target.value)}
         onKeyUpCapture={() => filter()}
         required
-      />{" "}
+      />
       {search ? (
-        <div className={`customInput__searchIcon flex_row ${searchIconStyle}`}>
-          <img src="images/searchIcon.svg" alt="searchingIcon" />
-        </div>
-      ) : null}{" "}
+        <SearchIcon
+          className="Icon customInput__searchIcon"
+          style={{ backgroundColor: searchIconBgColor }}
+        />
+      ) : null}
     </div>
   );
 }

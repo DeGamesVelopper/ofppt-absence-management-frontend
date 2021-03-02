@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 
 import { login } from "../../store/actions/authActions";
 
-import Input from "../Controls/CustomInput";
+import Input from "../Controls/CustomInput/";
 
 import "./login.css";
 
@@ -19,16 +19,19 @@ function Login() {
   const dispatch = useDispatch();
 
   const tryLogin = () => {
-    dispatch(login(username, pwd));
+    if (username && pwd) dispatch(login(username, pwd));
   };
 
   return islogin ? (
     <Redirect to="/" />
   ) : (
-    <>
-      <form className="login flex_column" onSubmit={e => e.preventDefault()}>
+    <div className="login  flex_column">
+      <form
+        className="login__Form  flex_column"
+        onSubmit={e => e.preventDefault()}
+      >
         <div>
-          <h1 className="login__title"> Login </h1>
+          <h1 className="login__title"> Log In </h1>
         </div>
         <Input
           className="login__input"
@@ -44,7 +47,7 @@ function Login() {
           type="password"
         />
         <button className="login__btn" onClick={() => tryLogin()}>
-          <span className="login__btntxt"> Login </span>
+          <span className="login__btn__txt"> Login </span>
           {isloading ? (
             <img
               className="login__loading"
@@ -54,7 +57,7 @@ function Login() {
           ) : null}
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

@@ -63,7 +63,6 @@ function CustomTable({
                         : null
                     }
                   >
-                    {/* obj[Object.keys(obj)[0]]  */}
                     <td> {item[Object.keys(item)[1]]} </td>
                     <td> {item[Object.keys(item)[2]]} </td>
                     <td

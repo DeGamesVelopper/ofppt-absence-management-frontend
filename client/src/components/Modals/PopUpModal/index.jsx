@@ -51,16 +51,15 @@ const PopUpModal = props => {
               src="images/closeIcon.svg"
               alt="closeModal"
               onClick={e => closeModalOnClick(e)}
-            />{" "}
-          </div>{" "}
+            />
+          </div>
           <div className="popUpModel__title">
-            <span> {title} </span>{" "}
-          </div>{" "}
-          {/* Inputs */}{" "}
+            <span> {title} </span>
+          </div>
+          {/* Inputs */}
           <div className="popUpModel__inputs flex_column"> {children} </div>
           <div className="popUpModel__buttons">
-            {" "}
-            {/* button sumbit */}{" "}
+            {/* button sumbit */}
             <button
               type="submit"
               className="popUpModel__sumbitButton"
@@ -68,18 +67,18 @@ const PopUpModal = props => {
                 SumbitAction();
               }}
             >
-              <span> {sumbitButton} </span>{" "}
-            </button>{" "}
-            {/* button cancelButton */}{" "}
+              <span> {sumbitButton} </span>
+            </button>
+            {/* button cancelButton */}
             <button
               className="popUpModel__cancelButton"
               onClick={e => closeModalOnClick(e)}
             >
-              <span className="txt"> {cancelButton} </span>{" "}
-            </button>{" "}
-          </div>{" "}
-        </div>{" "}
-      </div>{" "}
+              <span className="txt"> {cancelButton} </span>
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
